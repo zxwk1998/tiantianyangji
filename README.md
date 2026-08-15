@@ -30,7 +30,6 @@
 
 项目采用**纯原生 JavaScript 前端 + Node.js（Express 5）后端**，零框架依赖、开箱即用。无论你是想追踪 QDII 基金实时估值、查看基金连涨连跌与申购限额变化，还是需要技术信号辅助股票决策，或使用 OCR 识别持仓截图、网页内容 AI 总结等效率工具，天天养基都能满足你。
 
-> 💡 本项目由 [vue-admin-better](https://github.com/zxwk1998/vue-admin-better)（GitHub 高星 Vue 后台管理框架）作者 **zxwk1998** 开发维护，长期活跃更新，欢迎 Star ⭐ 与 Fork 支持！
 
 ---
 
