@@ -5,6 +5,10 @@
 </p>
 
 <p align="center">
+  <strong>中文</strong> | <a href="./README.en.md">English</a>
+</p>
+
+<p align="center">
   <a href="https://qdii.vuejs-core.cn/"><img src="https://img.shields.io/badge/🚀_在线体验-qdii.vuejs--core.cn-success" alt="在线体验"></a>
   <a href="https://github.com/zxwk1998/tiantianyangji"><img src="https://img.shields.io/github/stars/zxwk1998/tiantianyangji?style=flat-square&logo=GitHub" alt="Stars"></a>
   <a href="https://github.com/zxwk1998/tiantianyangji"><img src="https://img.shields.io/github/forks/zxwk1998/tiantianyangji?style=flat-square&logo=GitHub" alt="Forks"></a>
