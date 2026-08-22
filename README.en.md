@@ -18,6 +18,7 @@
 
 <p align="center">
   <a href="#-live-demo">🚀 Live Demo</a> •
+  <a href="#-android-apk-download">📲 Android APK Download</a> •
   <a href="#-core-features">✨ Core Features</a> •
   <a href="#-quick-start">⚡ Quick Start</a> •
   <a href="#-tech-architecture">🏗 Architecture</a> •
@@ -35,6 +36,23 @@
 The project is built with a **pure vanilla JavaScript frontend + Node.js (Express 5) backend** — zero framework dependency, ready out of the box. Whether you want to track real-time QDII fund NAV, monitor winning/losing streaks and subscription limits, get technical signals to assist stock decisions, or use OCR to parse portfolio screenshots and AI-summarize web pages, TianTian YangJi has you covered.
 
 > 💡 Developed and maintained by **zxwk1998**, author of [vue-admin-better](https://github.com/zxwk1998/vue-admin-better) (a high-star Vue admin framework on GitHub). Actively updated — Stars ⭐ and Forks are welcome!
+
+---
+
+## 📲 Android APK Download
+
+Android client APK (`tiantianyangji.apk`, ~5.0 MB) for Android phones. Multiple **accelerated mirrors** are provided below — if one link is unreachable or slow, try the others in order:
+
+| Mirror | Link | Notes |
+| --- | --- | --- |
+| ⚡ jsDelivr CDN (Recommended) | [📥 Download](https://cdn.jsdelivr.net/gh/zxwk1998/tiantianyangji@main/tiantianyangji.apk) | Global CDN, fast & stable in China |
+| ⚡ ghfast.top Proxy | [📥 Download](https://ghfast.top/https://github.com/zxwk1998/tiantianyangji/raw/main/tiantianyangji.apk) | GitHub acceleration proxy |
+| ⚡ gh-proxy.com Proxy | [📥 Download](https://gh-proxy.com/https://github.com/zxwk1998/tiantianyangji/raw/main/tiantianyangji.apk) | GitHub acceleration proxy |
+| ⚡ ghproxy.net Proxy | [📥 Download](https://ghproxy.net/https://github.com/zxwk1998/tiantianyangji/raw/main/tiantianyangji.apk) | GitHub acceleration proxy |
+| 🐙 GitHub Official | [📥 Download](https://raw.githubusercontent.com/zxwk1998/tiantianyangji/main/tiantianyangji.apk) | Official raw file, may be slow in China |
+
+> 💡 **Note**: The APK lives in this repo's root directory — links above always point to the latest version after updates.
+> 🔒 **Checksum**: MD5 `a4caf24360954ba5749fb693a1217045` — verify file integrity after download.
 
 ---
 

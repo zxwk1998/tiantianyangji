@@ -18,6 +18,7 @@
 
 <p align="center">
   <a href="#-在线体验">🚀 在线体验</a> •
+  <a href="#-安卓-apk-下载">📲 安卓 APK 下载</a> •
   <a href="#-核心功能">✨ 核心功能</a> •
   <a href="#-快速开始">⚡ 快速开始</a> •
   <a href="#-技术架构">🏗 技术架构</a> •
@@ -33,6 +34,24 @@
 - 💻 **GitHub 仓库地址：[https://github.com/zxwk1998/tiantianyangji](https://github.com/zxwk1998/tiantianyangji)**
 
 项目采用**纯原生 JavaScript 前端 + Node.js（Express 5）后端**，零框架依赖、开箱即用。无论你是想追踪 QDII 基金实时估值、查看基金连涨连跌与申购限额变化，还是需要技术信号辅助股票决策，或使用 OCR 识别持仓截图、网页内容 AI 总结等效率工具，天天养基都能满足你。
+
+
+---
+
+## 📲 安卓 APK 下载
+
+Android 客户端安装包（`tiantianyangji.apk`，约 5.0 MB），支持 Android 手机安装使用。以下提供多个**国内加速镜像**，若某个链接无法访问或下载缓慢，请依次尝试其他镜像：
+
+| 镜像 | 下载链接 | 说明 |
+| --- | --- | --- |
+| ⚡ jsDelivr 加速（推荐） | [📥 点击下载](https://cdn.jsdelivr.net/gh/zxwk1998/tiantianyangji@main/tiantianyangji.apk) | 全球 CDN 加速，国内访问速度快、稳定 |
+| ⚡ ghfast.top 加速 | [📥 点击下载](https://ghfast.top/https://github.com/zxwk1998/tiantianyangji/raw/main/tiantianyangji.apk) | GitHub 加速代理 |
+| ⚡ gh-proxy.com 加速 | [📥 点击下载](https://gh-proxy.com/https://github.com/zxwk1998/tiantianyangji/raw/main/tiantianyangji.apk) | GitHub 加速代理 |
+| ⚡ ghproxy.net 加速 | [📥 点击下载](https://ghproxy.net/https://github.com/zxwk1998/tiantianyangji/raw/main/tiantianyangji.apk) | GitHub 加速代理 |
+| 🐙 GitHub 官方直链 | [📥 点击下载](https://raw.githubusercontent.com/zxwk1998/tiantianyangji/main/tiantianyangji.apk) | 官方原始文件，国内访问可能较慢 |
+
+> 💡 **提示**：APK 文件保存在本仓库根目录，安装包更新后以上链接自动指向最新版本。
+> 🔒 **校验**：安装包 MD5 为 `a4caf24360954ba5749fb693a1217045`，下载后可在文件属性中核对完整性。
 
 
 ---
