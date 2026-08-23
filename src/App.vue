@@ -10,6 +10,7 @@
         </div>
       </div>
       <div class="top-actions">
+        <div class="hero3d-wrap"><Hero3D /></div>
         <span class="status" v-if="lastUpdate">{{ lastUpdate }}</span>
         <button class="refresh" :class="{ spinning: loading }" @click="load" :disabled="loading">
           <span class="ic">↻</span>{{ loading ? '同步中' : '刷新' }}
@@ -25,28 +26,28 @@
         target="_blank"
         rel="noopener noreferrer"
       >
-        <div class="stat-ic">🏠</div>
+        <div class="stat-ic"><Trophy3D /></div>
         <div class="stat-body">
           <div class="stat-num">天天养基</div>
           <div class="stat-label">返回主站 ↗</div>
         </div>
       </a>
       <div class="stat">
-        <div class="stat-ic">📅</div>
+        <div class="stat-ic"><Calendar3D /></div>
         <div class="stat-body">
           <div class="stat-num">{{ albums.length }}</div>
           <div class="stat-label">累计天数</div>
         </div>
       </div>
       <div class="stat">
-        <div class="stat-ic">🖼️</div>
+        <div class="stat-ic"><Stack3D /></div>
         <div class="stat-body">
           <div class="stat-num">{{ totalImages }}</div>
           <div class="stat-label">快照总数</div>
         </div>
       </div>
       <div class="stat">
-        <div class="stat-ic">✨</div>
+        <div class="stat-ic"><Star3D /></div>
         <div class="stat-body">
           <div class="stat-num">{{ albums[0] ? formatDate(albums[0].date) : '—' }}</div>
           <div class="stat-label">最新快照</div>
@@ -98,6 +99,8 @@
               :key="img.name"
               class="card"
               :style="{ animationDelay: i * 45 + 'ms' }"
+              @mousemove="onCardMove"
+              @mouseleave="onCardLeave"
               @click="openLightbox(i)"
             >
               <div class="thumb">
@@ -158,7 +161,8 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import { Trophy3D, Calendar3D, Stack3D, Star3D, Hero3D } from './components/Icon3D.vue'
 
 // Vite 构建时替换为 base（GitHub Pages 子路径下为 /tiantianyangji/，dev 为 /）
 const BASE = import.meta.env.BASE_URL
@@ -206,6 +210,24 @@ async function load() {
 
 function select(date) {
   selected.value = date
+  nextTick(() => {
+    const el = document.querySelector('.date-list li.active')
+    if (el) el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
+  })
+}
+// 图片卡片鼠标跟随 3D 倾斜
+function onCardMove(e) {
+  const el = e.currentTarget
+  el.classList.add('tilting')
+  const r = el.getBoundingClientRect()
+  const x = (e.clientX - r.left) / r.width - 0.5
+  const y = (e.clientY - r.top) / r.height - 0.5
+  el.style.transform = `perspective(900px) rotateY(${(x * 14).toFixed(2)}deg) rotateX(${(-y * 14).toFixed(2)}deg) translateY(-8px)`
+}
+function onCardLeave(e) {
+  const el = e.currentTarget
+  el.classList.remove('tilting')
+  el.style.transform = ''
 }
 function openLightbox(i) {
   lightboxIndex.value = i
@@ -321,6 +343,15 @@ body {
   background: radial-gradient(1200px 600px at 80% -10%, #eef0fb 0%, transparent 60%),
     radial-gradient(900px 500px at -10% 10%, #eef4ff 0%, transparent 55%), #f6f7fb;
 }
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  opacity: 0.035;
+}
 #app {
   height: 100vh;
 }
@@ -328,6 +359,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  height: 100dvh;
 }
 
 /* 顶栏 */
@@ -432,18 +464,20 @@ body {
   box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
 }
 .stat-ic {
-  width: 46px;
-  height: 46px;
-  border-radius: 12px;
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
   display: grid;
   place-items: center;
-  font-size: 22px;
+  padding: 9px;
   background: linear-gradient(135deg, #eef0fb, #e3e8fb);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 6px 14px rgba(85, 104, 211, 0.12);
 }
 .stat-num {
   font-size: 20px;
   font-weight: 800;
   line-height: 1.1;
+  font-variant-numeric: tabular-nums;
 }
 .stat-label {
   font-size: 12px;
@@ -601,8 +635,13 @@ body {
   overflow: hidden;
   cursor: zoom-in;
   box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   animation: rise 0.5s ease both;
+  will-change: transform;
+}
+.card.tilting {
+  transition: none;
 }
 @keyframes rise {
   from {
@@ -615,8 +654,7 @@ body {
   }
 }
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
+  box-shadow: 0 24px 50px rgba(15, 23, 42, 0.16);
 }
 .thumb {
   height: 280px;
@@ -629,10 +667,11 @@ body {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+  transform: translateZ(16px);
   transition: transform 0.25s ease;
 }
 .card:hover .thumb img {
-  transform: scale(1.04);
+  transform: translateZ(16px) scale(1.04);
 }
 .card-foot {
   display: flex;
@@ -642,9 +681,83 @@ body {
   border-top: 1px solid #f0f3f1;
   font-size: 12px;
   color: #6b7b76;
+  transform: translateZ(24px);
 }
 .card-foot .expand {
   color: #cbd5d1;
+}
+
+/* 3D 图标 */
+.i3d {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: drop-shadow(0 6px 10px rgba(15, 23, 42, 0.16));
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.stat-ic .i3d {
+  animation: iconFloat 4.5s ease-in-out infinite;
+}
+.stat:nth-child(1) .i3d {
+  animation-delay: 0s;
+}
+.stat:nth-child(2) .i3d {
+  animation-delay: 0.8s;
+}
+.stat:nth-child(3) .i3d {
+  animation-delay: 1.6s;
+}
+.stat:nth-child(4) .i3d {
+  animation-delay: 2.4s;
+}
+.stat:hover .i3d {
+  animation: iconBounce 0.7s ease infinite;
+}
+@keyframes iconFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotateY(-12deg) scale(1);
+  }
+  50% {
+    transform: translateY(-6px) rotateY(12deg) scale(1.06);
+  }
+}
+@keyframes iconBounce {
+  0%,
+  100% {
+    transform: translateY(0) rotateY(0deg) scale(1);
+  }
+  40% {
+    transform: translateY(-10px) rotateY(18deg) scale(1.12);
+  }
+  70% {
+    transform: translateY(2px) rotateY(-6deg) scale(0.98);
+  }
+}
+
+/* 顶部 3D 柱状图装饰 */
+.hero3d-wrap {
+  width: 46px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  animation: heroFloat 4.5s ease-in-out infinite;
+}
+.hero3d {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: drop-shadow(0 8px 14px rgba(85, 104, 211, 0.35));
+}
+@keyframes heroFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotateY(0deg);
+  }
+  50% {
+    transform: translateY(-4px) rotateY(12deg);
+  }
 }
 
 /* 灯箱 */
@@ -813,13 +926,63 @@ body {
 
 /* 响应式 */
 @media (max-width: 820px) {
+  .hero3d-wrap {
+    display: none;
+  }
+  .topbar {
+    padding: 10px 14px;
+    gap: 8px;
+  }
+  .brand {
+    gap: 10px;
+    min-width: 0;
+  }
+  .logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+  .brand-text {
+    min-width: 0;
+  }
+  .brand-text h1 {
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .sub {
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .status {
+    display: none;
+  }
+  .refresh {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
   .stats {
     grid-template-columns: 1fr;
-    padding: 16px 16px 4px;
+    padding: 14px 14px 4px;
+    gap: 12px;
+  }
+  .stats .stat:nth-child(n + 2) {
+    display: none;
+  }
+  .stat {
+    padding: 13px 14px;
+  }
+  .stat-ic {
+    width: 46px;
+    height: 46px;
+    padding: 8px;
   }
   .layout {
     flex-direction: column;
-    padding: 12px 16px 20px;
+    padding: 12px 14px calc(20px + env(safe-area-inset-bottom));
     gap: 14px;
   }
   .sidebar {
@@ -827,6 +990,7 @@ body {
     display: flex;
     overflow-x: auto;
     padding: 10px;
+    -webkit-overflow-scrolling: touch;
   }
   .sidebar-title {
     display: none;
@@ -836,14 +1000,15 @@ body {
     gap: 8px;
   }
   .date-list li {
+    flex: 0 0 auto;
     white-space: nowrap;
   }
   .grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
   }
   .thumb {
-    height: 190px;
+    height: 170px;
   }
   .lb-nav {
     width: 44px;
