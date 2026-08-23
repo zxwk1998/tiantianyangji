@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -48,3 +48,49 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  tag-apk:
+    # 每次 push 中 tiantianyangji.apk 发生变化时，自动打递增版本 tag（vX.Y.Z），方便用户下载
+    needs: build
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Check APK changed
+        id: check
+        run: |
+          if git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" | grep -qx 'tiantianyangji.apk'; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create release tag
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          NEW_TAG=$(node -e '
+            const { execSync } = require("child_process");
+            const tags = execSync("git tag --list \"v*\"", { encoding: "utf8" }).trim().split("\n").filter(Boolean);
+            let max = [0, 0, 0];
+            let found = false;
+            for (const t of tags) {
+              const m = t.match(/^v(\d+)\.(\d+)\.(\d+)$/);
+              if (m) {
+                found = true;
+                const v = [Number(m[1]), Number(m[2]), Number(m[3])];
+                if (v[0] > max[0] || (v[0] === max[0] && v[1] > max[1]) || (v[0] === max[0] && v[1] === max[1] && v[2] > max[2])) max = v;
+              }
+            }
+            if (!found) max = [1, 0, 0];
+            else max[2] += 1;
+            console.log("v" + max.join("."));
+          ')
+          echo "创建版本标签: $NEW_TAG"
+          git tag "$NEW_TAG"
+          git push origin "$NEW_TAG"
