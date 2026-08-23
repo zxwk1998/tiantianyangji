@@ -96,8 +96,15 @@ tiantianyangji/
 | ![tail-rush.png](https://raw.githubusercontent.com/zxwk1998/tiantianyangji/main/20260824-0218/tail-rush.png) | [tail-rush.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0218/tail-rush.png) |
 
 ## 📸 运营导出截图
-
-- [2026-08-24 02:18](https://github.com/zxwk1998/tiantianyangji/tree/main/20260824-0218)（7 张）：[rankings-funds.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0218/rankings-funds.png)、[qdii-funds.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0218/qdii-funds.png)、[fund-limit.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0218/fund-limit.png)、[fund-manager.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0218/fund-manager.png)、[fund-us-ratio.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0218/fund-us-ratio.png)、[fund-hold-ranking.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0218/fund-hold-ranking.png)、[tail-rush.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0218/tail-rush.png)
-
+- [2026-08-23 23:54](https://github.com/zxwk1998/tiantianyangji/tree/main/20260823-2354)
+- [2026-08-24 00:02](https://github.com/zxwk1998/tiantianyangji/tree/main/20260824-0002)
+- [2026-08-24 00:31](https://github.com/zxwk1998/tiantianyangji/tree/main/20260824-0031)
+- [2026-08-24 00:51](https://github.com/zxwk1998/tiantianyangji/tree/main/20260824-0051)
+- [2026-08-24 00:53](https://github.com/zxwk1998/tiantianyangji/tree/main/20260824-0053)
+- [2026-08-24 01:06](https://github.com/zxwk1998/tiantianyangji/tree/main/20260824-0106)
+- [2026-08-24 01:16](https://github.com/zxwk1998/tiantianyangji/tree/main/20260824-0116)
+- [2026-08-24 02:03](https://github.com/zxwk1998/tiantianyangji/tree/main/20260824-0203)
+- [2026-08-24 02:09](https://github.com/zxwk1998/tiantianyangji/tree/main/20260824-0209)
 - [2026-08-24 02:13](https://github.com/zxwk1998/tiantianyangji/tree/main/20260824-0210)
+- [2026-08-24 02:18](https://github.com/zxwk1998/tiantianyangji/tree/main/20260824-0218)
 
