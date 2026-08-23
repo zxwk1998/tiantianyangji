@@ -19,6 +19,18 @@
 
     <!-- 概览统计 -->
     <section class="stats" v-if="albums.length">
+      <a
+        class="stat stat-link"
+        href="https://niulai.vuejs-core.cn"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <div class="stat-ic">🏠</div>
+        <div class="stat-body">
+          <div class="stat-num">天天养基</div>
+          <div class="stat-label">返回主站 ↗</div>
+        </div>
+      </a>
       <div class="stat">
         <div class="stat-ic">📅</div>
         <div class="stat-body">
@@ -239,8 +251,8 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
     'Microsoft YaHei', sans-serif;
   color: #0f172a;
-  background: radial-gradient(1200px 600px at 80% -10%, #e7f7ef 0%, transparent 60%),
-    radial-gradient(900px 500px at -10% 10%, #eef4ff 0%, transparent 55%), #f5f8f7;
+  background: radial-gradient(1200px 600px at 80% -10%, #eef0fb 0%, transparent 60%),
+    radial-gradient(900px 500px at -10% 10%, #eef4ff 0%, transparent 55%), #f6f7fb;
 }
 #app {
   height: 100vh;
@@ -275,8 +287,8 @@ body {
   height: 44px;
   border-radius: 13px;
   object-fit: cover;
-  background: linear-gradient(135deg, #10b981, #059669);
-  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
+  background: linear-gradient(135deg, #5568d3, #6a7de0);
+  box-shadow: 0 6px 18px rgba(85, 104, 211, 0.35);
 }
 .brand-text h1 {
   margin: 0;
@@ -303,19 +315,19 @@ body {
   align-items: center;
   gap: 6px;
   border: none;
-  background: linear-gradient(135deg, #10b981, #059669);
+  background: linear-gradient(135deg, #5568d3, #6a7de0);
   color: #fff;
   padding: 9px 16px;
   border-radius: 10px;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+  box-shadow: 0 4px 14px rgba(85, 104, 211, 0.3);
   transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
 }
 .refresh:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 6px 18px rgba(85, 104, 211, 0.4);
 }
 .refresh:disabled {
   opacity: 0.7;
@@ -337,10 +349,10 @@ body {
 /* 统计卡片 */
 .stats {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   gap: 16px;
   padding: 20px 26px 4px;
-  max-width: 1100px;
+  max-width: 1200px;
 }
 .stat {
   display: flex;
@@ -359,7 +371,7 @@ body {
   display: grid;
   place-items: center;
   font-size: 22px;
-  background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+  background: linear-gradient(135deg, #eef0fb, #e3e8fb);
 }
 .stat-num {
   font-size: 20px;
@@ -370,6 +382,21 @@ body {
   font-size: 12px;
   color: #8a9793;
   margin-top: 2px;
+}
+.stat-link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  outline: 1px solid transparent;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, outline-color 0.16s ease;
+}
+.stat-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px rgba(85, 104, 211, 0.22);
+  outline-color: rgba(85, 104, 211, 0.5);
+}
+.stat-link .stat-num {
+  color: #3d4fb0;
 }
 
 /* 布局 */
@@ -415,20 +442,20 @@ body {
   transition: background 0.14s, color 0.14s;
 }
 .date-list li:hover {
-  background: #f0faf4;
+  background: #f0f2fb;
 }
 .date-list li.active {
-  background: linear-gradient(135deg, #10b981, #059669);
+  background: linear-gradient(135deg, #5568d3, #6a7de0);
   color: #fff;
   font-weight: 700;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  box-shadow: 0 4px 12px rgba(85, 104, 211, 0.3);
 }
 .date-list .dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #fbbf24;
-  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.25);
+  background: #ffb800;
+  box-shadow: 0 0 0 3px rgba(255, 184, 0, 0.3);
   flex-shrink: 0;
 }
 .date-list li.active .dot {
@@ -487,8 +514,8 @@ body {
 }
 .badge {
   font-size: 12px;
-  background: #d1fae5;
-  color: #047857;
+  background: #e3e8fb;
+  color: #3d4fb0;
   padding: 3px 12px;
   border-radius: 20px;
   font-weight: 600;
@@ -526,7 +553,7 @@ body {
 }
 .thumb {
   height: 280px;
-  background: repeating-linear-gradient(45deg, #fafcfa, #fafcfa 12px, #f3f7f4 12px, #f3f7f4 24px);
+  background: repeating-linear-gradient(45deg, #fafcfa, #fafcfa 12px, #eef1f8 12px, #eef1f8 24px);
   display: grid;
   place-items: center;
   overflow: hidden;
@@ -638,11 +665,11 @@ body {
   margin-top: 14px;
 }
 .lb-cap {
-  color: #e8efe8;
+  color: #eef1fb;
   font-size: 13px;
 }
 .lb-counter {
-  color: #9fb0a8;
+  color: #aab4d6;
   font-size: 12px;
 }
 .lb-thumbs {
@@ -675,7 +702,7 @@ body {
 }
 .lb-thumb.on {
   opacity: 1;
-  border-color: #10b981;
+  border-color: #5568d3;
 }
 
 /* 响应式 */
