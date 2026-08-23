@@ -76,9 +76,13 @@
 
       <!-- 内容区 -->
       <main class="content">
-        <div v-if="!selectedAlbum" class="placeholder">
+        <div v-if="!selectedAlbum && !loading" class="placeholder">
           <div class="ph-icon">🗂️</div>
           <p>从左侧选择日期，浏览当日的基金 / 股票快照</p>
+        </div>
+
+        <div v-else-if="!selectedAlbum && loading" class="skeleton-grid">
+          <div class="skel-card" v-for="n in 8" :key="n"></div>
         </div>
 
         <template v-else>
@@ -97,10 +101,10 @@
               @click="openLightbox(i)"
             >
               <div class="thumb">
-                <img :src="img.url" :alt="img.name" loading="lazy" />
+                <img :src="img.url" :alt="img.name" loading="lazy" @error="onImgError" />
               </div>
               <div class="card-foot">
-                <span class="fname">{{ img.name }}</span>
+                <span class="fname" :title="img.name">{{ labelFor(img.name) }}</span>
                 <span class="expand">⤢</span>
               </div>
             </div>
@@ -111,6 +115,10 @@
 
     <!-- 灯箱 -->
     <div v-if="lightboxIndex !== null" class="lightbox" @click.self="closeLightbox">
+      <div class="lb-actions" v-if="currentImage">
+        <a class="lb-btn lb-act" :href="currentImage.url" :download="currentImage.name" title="下载原图">⬇</a>
+        <a class="lb-btn lb-act" :href="currentImage.url" target="_blank" rel="noopener" title="新标签打开原图">↗</a>
+      </div>
       <button class="lb-btn lb-close" @click="closeLightbox" title="关闭 (Esc)">✕</button>
       <button
         class="lb-btn lb-nav prev"
@@ -131,7 +139,7 @@
       >›</button>
 
       <div class="lb-bottom" v-if="selectedAlbum">
-        <div class="lb-cap">{{ currentImage?.name }}</div>
+        <div class="lb-cap">{{ currentImage ? labelFor(currentImage.name) : '' }}</div>
         <div class="lb-counter">{{ lightboxIndex + 1 }} / {{ selectedAlbum.images.length }}</div>
         <div class="lb-thumbs" v-if="selectedAlbum.images.length > 1">
           <button
@@ -141,7 +149,7 @@
             :class="{ on: i === lightboxIndex }"
             @click.stop="lightboxIndex = i"
           >
-            <img :src="t.url" :alt="t.name" />
+            <img :src="t.url" :alt="t.name" @error="onImgError" />
           </button>
         </div>
       </div>
@@ -172,7 +180,7 @@ const totalImages = computed(() =>
 async function load() {
   loading.value = true
   try {
-    const res = await fetch('/api/albums', { cache: 'no-store' })
+    const res = await fetch('/albums.json', { cache: 'no-store' })
     const data = await res.json()
     albums.value = Array.isArray(data) ? data : []
     if (albums.value.length) {
@@ -210,8 +218,55 @@ function next() {
   lightboxIndex.value = (lightboxIndex.value + 1) % n
 }
 
+// 图片加载失败兜底
+const BROKEN =
+  'data:image/svg+xml;utf8,' +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><rect width="200" height="200" fill="#eef1f8"/><text x="50%" y="50%" font-size="14" fill="#8a9793" text-anchor="middle" dominant-baseline="middle">图片缺失</text></svg>'
+  )
+function onImgError(e) {
+  const t = e.target
+  if (t.dataset.fb) return
+  t.dataset.fb = '1'
+  t.src = BROKEN
+}
+
+// 文件名 → 中文标签
+const NAME_MAP = {
+  longhu: '龙虎榜',
+  qdii: 'QDII 估值',
+  qdii_funds: 'QDII 基金',
+  rankings: '基金排行',
+  rankings_funds: '基金排名',
+  tiantian_rank: '天天排行',
+  market_indices: '市场指数',
+  a_share_industries: 'A股行业',
+  a_kill: 'A股杀跌',
+  flat_stock: '横盘个股',
+  stock_hot: '热门个股',
+  fund_hold_ranking: '基金持仓排行',
+  fund_manager: '基金经理',
+  fund_limit: '基金限购',
+  fund_us_ratio: '基金美股权重',
+  block_list: '板块榜单',
+  block_surge: '板块涨幅',
+  sector_rotation: '板块轮动',
+  sector_capital_flow: '板块资金流',
+  double_bottom: '双底形态',
+  tail_rush: '尾盘拉升',
+  quant_pick: '量化精选',
+  market: '市场概览',
+  quant: '量化信号',
+  news: '财经新闻',
+  block: '板块榜'
+}
+function labelFor(name) {
+  const base = name.replace(/\.[^.]+$/, '').toLowerCase().replace(/-/g, '_')
+  return NAME_MAP[base] || name
+}
+
 function formatDate(raw) {
-  const m = raw.match(/^(\d{4})(\d{2})(\d{2})(?:-(\d{2})(\d{2}))?$/)
+  const m = raw.match(/^(\d{4})[-]?(\d{2})[-]?(\d{2})(?:[-]?(\d{2})[-]?(\d{2}))?$/)
   if (m) {
     const [, y, mo, d, h, mi] = m
     return h ? `${y}-${mo}-${d} ${h}:${mi}` : `${y}-${mo}-${d}`
@@ -227,13 +282,19 @@ function onKey(e) {
 }
 
 let timer = null
+// 仅当标签页可见时才刷新，避免后台轮询打断查看
+function tick() {
+  if (document.visibilityState === 'visible') load()
+}
 onMounted(() => {
   load()
   window.addEventListener('keydown', onKey)
-  timer = setInterval(load, 5 * 60 * 1000)
+  document.addEventListener('visibilitychange', tick)
+  timer = setInterval(tick, 5 * 60 * 1000)
 })
 onUnmounted(() => {
   window.removeEventListener('keydown', onKey)
+  document.removeEventListener('visibilitychange', tick)
   if (timer) clearInterval(timer)
 })
 </script>
@@ -703,6 +764,45 @@ body {
 .lb-thumb.on {
   opacity: 1;
   border-color: #5568d3;
+}
+
+/* 骨架屏 */
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 18px;
+}
+.skel-card {
+  height: 326px;
+  border-radius: 16px;
+  background: linear-gradient(100deg, #eef1f8 30%, #f6f8fc 50%, #eef1f8 70%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite linear;
+}
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* 灯箱操作按钮 */
+.lb-actions {
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  display: flex;
+  gap: 10px;
+  z-index: 2;
+}
+.lb-act {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  font-size: 18px;
+  text-decoration: none;
 }
 
 /* 响应式 */

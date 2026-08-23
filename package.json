@@ -26,9 +26,11 @@
     "qdii"
   ],
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "gen": "node scripts/build-gallery.mjs",
+    "dev": "node scripts/build-gallery.mjs && vite",
+    "build": "node scripts/build-gallery.mjs && vite build",
+    "preview": "vite preview",
+    "start": "vite preview"
   },
   "dependencies": {
     "vue": "^3.5.13"
