@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3d4fb0"/>
+      <stop offset="50%" stop-color="#5568d3"/>
+      <stop offset="100%" stop-color="#6a7de0"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffd700"/>
+      <stop offset="100%" stop-color="#ffb800"/>
+    </linearGradient>
+  </defs>
+  <!-- 背景铺满 -->
+  <rect width="512" height="512" fill="url(#bg)"/>
+  <ellipse cx="110" cy="90" rx="190" ry="125" fill="rgba(255,255,255,0.18)"/>
+  <ellipse cx="420" cy="440" rx="170" ry="105" fill="rgba(123,140,232,0.38)"/>
+  <!-- 内容缩小到 65% 并居中，确保在 Android 自适应图标圆形裁剪安全区内 -->
+  <g transform="translate(256,256) scale(0.65) translate(-256,-256)">
+    <!-- 上升柱状图 -->
+    <rect x="138" y="338" width="28" height="74" rx="6" fill="rgba(255,255,255,0.55)"/>
+    <rect x="208" y="298" width="28" height="114" rx="6" fill="rgba(255,255,255,0.7)"/>
+    <rect x="278" y="318" width="28" height="94" rx="6" fill="rgba(255,255,255,0.7)"/>
+    <rect x="348" y="248" width="28" height="164" rx="6" fill="rgba(255,255,255,0.85)"/>
+    <!-- 上升折线 -->
+    <polyline points="152,340 222,300 292,320 362,270"
+      fill="none" stroke="white" stroke-width="14"
+      stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- 上涨箭头 -->
+    <path d="M362,270 L348,290 M362,270 L376,290 M362,270 L362,300"
+      stroke="white" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <!-- 金色幸运星 -->
+    <g transform="translate(150,105)">
+      <path d="M0,-22 L6,-7 L22,-7 L9,3 L14,18 L0,9 L-14,18 L-9,3 L-22,-7 L-6,-7 Z"
+        fill="url(#gold)" stroke="rgba(255,184,0,0.6)" stroke-width="1"/>
+    </g>
+  </g>
+</svg>

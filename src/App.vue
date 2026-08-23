@@ -3,7 +3,7 @@
     <!-- 顶栏：玻璃拟态 -->
     <header class="topbar">
       <div class="brand">
-        <div class="logo">🌱</div>
+        <img class="logo" src="/icon.svg" alt="天天养基" />
         <div class="brand-text">
           <h1>天天养基 · 图片馆</h1>
           <p class="sub">基金 / 股票每日快照 · 本地画廊</p>
@@ -274,9 +274,7 @@ body {
   width: 44px;
   height: 44px;
   border-radius: 13px;
-  display: grid;
-  place-items: center;
-  font-size: 24px;
+  object-fit: cover;
   background: linear-gradient(135deg, #10b981, #059669);
   box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
 }
@@ -385,7 +383,7 @@ body {
 
 /* 侧栏 */
 .sidebar {
-  width: 230px;
+  width: 300px;
   flex-shrink: 0;
   background: rgba(255, 255, 255, 0.85);
   border: 1px solid rgba(15, 23, 42, 0.05);
