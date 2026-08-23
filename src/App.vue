@@ -3,7 +3,7 @@
     <!-- 顶栏：玻璃拟态 -->
     <header class="topbar">
       <div class="brand">
-        <img class="logo" src="/icon.svg" alt="天天养基" />
+        <img class="logo" :src="BASE + 'icon.svg'" alt="天天养基" />
         <div class="brand-text">
           <h1>天天养基 · 图片馆</h1>
           <p class="sub">基金 / 股票每日快照 · 本地画廊</p>
@@ -160,6 +160,9 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 
+// Vite 构建时替换为 base（GitHub Pages 子路径下为 /tiantianyangji/，dev 为 /）
+const BASE = import.meta.env.BASE_URL
+
 const albums = ref([])
 const selected = ref('')
 const loading = ref(false)
@@ -180,9 +183,12 @@ const totalImages = computed(() =>
 async function load() {
   loading.value = true
   try {
-    const res = await fetch('/albums.json', { cache: 'no-store' })
+    const res = await fetch(BASE + 'albums.json', { cache: 'no-store' })
     const data = await res.json()
-    albums.value = Array.isArray(data) ? data : []
+    albums.value = (Array.isArray(data) ? data : []).map((a) => ({
+      ...a,
+      images: a.images.map((img) => ({ ...img, url: BASE + img.url.replace(/^\//, '') })),
+    }))
     if (albums.value.length) {
       const stillExists = albums.value.some((a) => a.date === selected.value)
       if (!stillExists) selected.value = albums.value[0].date
