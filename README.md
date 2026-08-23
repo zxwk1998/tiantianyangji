@@ -114,15 +114,5 @@ tiantianyangji/
 ## 📸 运营导出截图
 
 - [2026-08-24 03:07](https://github.com/zxwk1998/tiantianyangji/tree/main/20260824-0306)（20 张）：[rankings-funds.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0306/rankings-funds.png)、[qdii-funds.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0306/qdii-funds.png)、[a-share-industries.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0306/a-share-industries.png)、[block-list.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0306/block-list.png)、[longhu.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0306/longhu.png)、[fund-limit.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0306/fund-limit.png)、[fund-manager.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0306/fund-manager.png)、[fund-us-ratio.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0306/fund-us-ratio.png)、[tiantian-rank.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0306/tiantian-rank.png)、[quant-pick.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0306/quant-pick.png)、[fund-hold-ranking.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0306/fund-hold-ranking.png)、[a-kill.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0306/a-kill.png)、[flat-stock.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0306/flat-stock.png)、[double-bottom.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0306/double-bottom.png)、[stock-hot.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0306/stock-hot.png)、[market-indices.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0306/market-indices.png)、[block-surge.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0306/block-surge.png)、[sector-capital-flow.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0306/sector-capital-flow.png)、[sector-rotation.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0306/sector-rotation.png)、[tail-rush.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0306/tail-rush.png)
-- [2026-08-23 23:54](https://github.com/zxwk1998/tiantianyangji/tree/main/20260823-2354)
-- [2026-08-24 00:02](https://github.com/zxwk1998/tiantianyangji/tree/main/20260824-0002)
-- [2026-08-24 00:31](https://github.com/zxwk1998/tiantianyangji/tree/main/20260824-0031)
-- [2026-08-24 00:51](https://github.com/zxwk1998/tiantianyangji/tree/main/20260824-0051)
-- [2026-08-24 00:53](https://github.com/zxwk1998/tiantianyangji/tree/main/20260824-0053)
-- [2026-08-24 01:06](https://github.com/zxwk1998/tiantianyangji/tree/main/20260824-0106)
-- [2026-08-24 01:16](https://github.com/zxwk1998/tiantianyangji/tree/main/20260824-0116)
-- [2026-08-24 02:03](https://github.com/zxwk1998/tiantianyangji/tree/main/20260824-0203)
-- [2026-08-24 02:09](https://github.com/zxwk1998/tiantianyangji/tree/main/20260824-0209)
-- [2026-08-24 02:13](https://github.com/zxwk1998/tiantianyangji/tree/main/20260824-0210)
-- [2026-08-24 02:18](https://github.com/zxwk1998/tiantianyangji/tree/main/20260824-0218)
+
 
