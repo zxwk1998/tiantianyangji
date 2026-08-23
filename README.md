@@ -83,7 +83,21 @@ tiantianyangji/
 
 > ⚠️ **免责声明**：本系统所有内容均由系统自动采集公开市场数据并基于开源算法与 AI 指标分析生成，不构成任何投资建议。市场有风险，投资需谨慎，据此操作风险自担。
 
+## 📸 最新上传快照
+
+| 图片 | 文件 |
+| --- | --- |
+| ![rankings-funds.png](https://raw.githubusercontent.com/zxwk1998/tiantianyangji/main/20260824-0218/rankings-funds.png) | [rankings-funds.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0218/rankings-funds.png) |
+| ![qdii-funds.png](https://raw.githubusercontent.com/zxwk1998/tiantianyangji/main/20260824-0218/qdii-funds.png) | [qdii-funds.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0218/qdii-funds.png) |
+| ![fund-limit.png](https://raw.githubusercontent.com/zxwk1998/tiantianyangji/main/20260824-0218/fund-limit.png) | [fund-limit.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0218/fund-limit.png) |
+| ![fund-manager.png](https://raw.githubusercontent.com/zxwk1998/tiantianyangji/main/20260824-0218/fund-manager.png) | [fund-manager.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0218/fund-manager.png) |
+| ![fund-us-ratio.png](https://raw.githubusercontent.com/zxwk1998/tiantianyangji/main/20260824-0218/fund-us-ratio.png) | [fund-us-ratio.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0218/fund-us-ratio.png) |
+| ![fund-hold-ranking.png](https://raw.githubusercontent.com/zxwk1998/tiantianyangji/main/20260824-0218/fund-hold-ranking.png) | [fund-hold-ranking.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0218/fund-hold-ranking.png) |
+| ![tail-rush.png](https://raw.githubusercontent.com/zxwk1998/tiantianyangji/main/20260824-0218/tail-rush.png) | [tail-rush.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0218/tail-rush.png) |
+
 ## 📸 运营导出截图
+
+- [2026-08-24 02:18](https://github.com/zxwk1998/tiantianyangji/tree/main/20260824-0218)（7 张）：[rankings-funds.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0218/rankings-funds.png)、[qdii-funds.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0218/qdii-funds.png)、[fund-limit.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0218/fund-limit.png)、[fund-manager.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0218/fund-manager.png)、[fund-us-ratio.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0218/fund-us-ratio.png)、[fund-hold-ranking.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0218/fund-hold-ranking.png)、[tail-rush.png](https://github.com/zxwk1998/tiantianyangji/blob/main/20260824-0218/tail-rush.png)
 
 - [2026-08-24 02:13](https://github.com/zxwk1998/tiantianyangji/tree/main/20260824-0210)
 
