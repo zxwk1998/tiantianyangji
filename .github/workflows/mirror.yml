@@ -1,0 +1,100 @@
+name: Mirror to backup repos
+
+# 用途：把本仓库的分支与标签全量镜像到以下两个备份仓库
+#   - https://github.com/zxwk1998/xiaobeiyangji
+#   - https://github.com/zxwk1998/yangjibao-
+# 触发：每天北京时间 00:00 自动执行（cron 见下），也可在 Actions 页面手动运行。
+# 前置：本仓库需配置 Secret `MIRROR_TOKEN`（一把对两个目标仓库有写权限的 PAT）。
+
+on:
+  schedule:
+    # ⚠️ GitHub Actions 的 cron 一律按 UTC 解释，且不受夏令时影响。
+    # 北京时间 00:00（CST, UTC+8）= 前一日 UTC 16:00，故写作 0 16 * * *。
+    - cron: '0 16 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '演练模式：只比对远端，不真正写入'
+        type: boolean
+        default: false
+
+# 推送目标是外部仓库，用自带的 GITHUB_TOKEN 做不到，必须用 MIRROR_TOKEN（PAT）。
+# 这里只需读本仓库内容。
+permissions:
+  contents: read
+
+concurrency:
+  group: mirror-push
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    name: Mirror → ${{ matrix.target }}
+    runs-on: ubuntu-latest
+    # 本工作流自身也会被镜像到目标仓库。加这层守卫后，
+    # 它在备份仓库里只会显示为 skipped，而不会因缺 Secret 而每天失败。
+    if: github.repository == 'zxwk1998/tiantianyangji'
+    strategy:
+      fail-fast: false # 一个目标失败不影响另一个
+      matrix:
+        target:
+          - xiaobeiyangji
+          - yangjibao-
+    env:
+      OWNER: zxwk1998
+      TARGET: ${{ matrix.target }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # 必须为 0：镜像要推完整历史，浅克隆无法推送
+          fetch-tags: true # 55 个版本 tag 需一并镜像
+          persist-credentials: false # 不把凭据留在 .git/config，防止误推回源仓库
+
+      - name: Push branches & tags
+        shell: bash
+        env:
+          MIRROR_TOKEN: ${{ secrets.MIRROR_TOKEN }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          set -euo pipefail
+          if [ -z "${MIRROR_TOKEN:-}" ]; then
+            echo "::error::缺少 Secret MIRROR_TOKEN。请在 Settings → Secrets and variables → Actions 中添加。"
+            exit 1
+          fi
+          REPO_URL="https://x-access-token:${MIRROR_TOKEN}@github.com/${OWNER}/${TARGET}.git"
+          echo "目标仓库：${OWNER}/${TARGET}"
+
+          PUSH_ARGS=(--force --prune)
+          if [ "${DRY_RUN}" = "true" ]; then
+            PUSH_ARGS+=(--dry-run)
+            echo "::notice::演练模式，本次不会真正写入远端"
+          fi
+
+          # 只显式推送 heads 与 tags 两类引用：
+          # 不用 `git push --mirror`，因为它会连 refs/remotes/* 一起推过去，污染目标仓库。
+          # --prune 保证源仓库删除过的分支在目标仓库同步消失。
+          git push "${PUSH_ARGS[@]}" "$REPO_URL" \
+            'refs/heads/*:refs/heads/*' \
+            'refs/tags/*:refs/tags/*'
+
+      - name: Verify
+        if: inputs.dry_run != true
+        shell: bash
+        env:
+          MIRROR_TOKEN: ${{ secrets.MIRROR_TOKEN }}
+        run: |
+          set -euo pipefail
+          REPO_URL="https://x-access-token:${MIRROR_TOKEN}@github.com/${OWNER}/${TARGET}.git"
+          LOCAL_SHA=$(git rev-parse HEAD)
+          REMOTE_SHA=$(git ls-remote "$REPO_URL" refs/heads/main | cut -f1)
+          LOCAL_TAGS=$(git tag | wc -l | tr -d ' ')
+          REMOTE_TAGS=$(git ls-remote --tags "$REPO_URL" | grep -v '\^{}' | wc -l | tr -d ' ')
+
+          echo "main 提交：本地 ${LOCAL_SHA} / 远端 ${REMOTE_SHA}"
+          echo "tag 数量：本地 ${LOCAL_TAGS} / 远端 ${REMOTE_TAGS}"
+
+          if [ "$LOCAL_SHA" != "$REMOTE_SHA" ]; then
+            echo "::error::${TARGET} 的 main 未同步到最新提交"
+            exit 1
+          fi
