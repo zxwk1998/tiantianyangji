@@ -5,6 +5,13 @@ name: Mirror to backup repos
 #   - https://github.com/zxwk1998/yangjibao-
 # 触发：每天北京时间 00:00 自动执行（cron 见下），也可在 Actions 页面手动运行。
 # 前置：本仓库需配置 Secret `MIRROR_TOKEN`（一把对两个目标仓库有写权限的 PAT）。
+# 内容：分支 + 标签走 git push；topics 不属于 git 内容，走 GitHub API 单独同步。
+#
+# 关于耗时：仓库 .git 约 190MB（55 个版本 tag，每版含 APK）。
+#   首次同步要把这些对象传一遍，之后每天只传“新增的那几个提交”，通常几秒到几十秒。
+#   Action 跑在 GitHub 机房内、两端都是 GitHub，带宽远超本地跨境推送；
+#   若需在本机手工补推（例如初次播种），请用 scripts/mirror-push.sh，
+#   它把推送拆成小连接并自动重试，避免单条长连接被掐断。
 
 on:
   schedule:
@@ -98,3 +105,33 @@ jobs:
             echo "::error::${TARGET} 的 main 未同步到最新提交"
             exit 1
           fi
+
+      # topics 不属于 git 内容，无法靠 push 带过去，只能调 GitHub API 写。
+      - name: Sync topics
+        if: inputs.dry_run != true
+        continue-on-error: true # 仓库设置类操作，失败不阻断镜像本身
+        shell: bash
+        env:
+          MIRROR_TOKEN: ${{ secrets.MIRROR_TOKEN }}
+        run: |
+          set -uo pipefail
+          API="https://api.github.com/repos"
+          SRC=$(curl -sS -H 'Accept: application/vnd.github+json' \
+                 "${API}/${GITHUB_REPOSITORY}/topics" | jq -c '.names // []')
+          echo "源仓库 topics：${SRC}"
+
+          RESP=$(curl -sS -w '\n%{http_code}' -X PUT \
+            -H "Authorization: Bearer ${MIRROR_TOKEN}" \
+            -H 'Accept: application/vnd.github+json' \
+            -H 'X-GitHub-Api-Version: 2022-11-28' \
+            "${API}/${OWNER}/${TARGET}/topics" \
+            -d "{\"names\":${SRC}}")
+          CODE=$(printf '%s' "$RESP" | tail -1)
+          BODY=$(printf '%s' "$RESP" | sed '$d')
+
+          if [ "$CODE" != "200" ]; then
+            # 常见原因：PAT 缺少仓库设置类权限。经典 PAT 勾 repo 即可。
+            echo "::warning::${TARGET} 的 topics 同步失败（HTTP ${CODE}）：${BODY}"
+            exit 0
+          fi
+          echo "已写入 ${TARGET} 的 topics：$(printf '%s' "$BODY" | jq -c '.names')"
